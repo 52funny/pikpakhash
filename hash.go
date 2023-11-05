@@ -95,8 +95,6 @@ func (ph *PikPakHash) HashFromFile(file *os.File) (string, error) {
 	// close the channel
 	close(outCh)
 
-	// fmt.Printf("%d %x\n", result[1].id, result[1].data)
-	// fmt.Printf("%d %x\n", result[2].id, result[2].data)
 	// calculate file sha1
 	for h.Len() > 0 {
 		resHash.Write(h.Pop().hash)
@@ -122,12 +120,10 @@ func (ph *PikPakHash) calculate(file *os.File, chunkSize int64, ch chan segmentO
 	buf := make([]byte, ph.buffer)
 	for {
 		info, ok := <-ch
-		// fmt.Println(info, ok)
 		if !ok {
 			break
 		}
 		partHash := sha1.New()
-		// io.CopyN(partHash, file, chunkSize)
 		offset := info.offset
 		total := int64(0)
 		for {
